@@ -124,6 +124,18 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
+    systemd.services.biosWakeupWorkaround = {
+        enable = true;
+        description = "Workaround for Gigabyte B550 F13 bios sleep/wakeup bug";
+        unitConfig = {
+            Type = "oneshot";
+        };
+        serviceConfig = {
+            ExecStart = "/bin/sh -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP0' > /proc/acpi/wakeup; fi'";
+        };
+        wantedBy = [ "multi-user.target" ];
+    };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

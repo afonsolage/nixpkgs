@@ -6,6 +6,11 @@
     let
         system = "x86_64-linux";
         pkgs = nixpkgs.legacyPackages.${system};
+        buildInputs = with pkgs; [
+            udev alsa-lib vulkan-loader
+            xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXrandr #x11
+            libxkbcommon wayland #wayland
+        ];
     in
     with pkgs; {
         devShells.${system} = {
@@ -14,15 +19,8 @@
                 nativeBuildInputs = [
                     pkg-config
                 ];
-                buildInputs = [
-                    udev alsa-lib vulkan-loader
-                    xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXrandr #x11
-                    libxkbcommon wayland #wayldn
-                ];
-                shellHook = ''export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${lib.makeLibraryPath [
-                    alsa-lib
-                    udev
-                ]}"'';
+                inherit buildInputs;
+                shellHook = ''export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${lib.makeLibraryPath buildInputs}"'';
             };
         };
     };

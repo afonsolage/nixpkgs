@@ -19,6 +19,10 @@
                     xorg.libX11 xorg.libXcursor xorg.libXi xorg.libXrandr #x11
                     libxkbcommon wayland #wayldn
                 ];
+                shellHook = ''export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${lib.makeLibraryPath [
+                    alsa-lib
+                    udev
+                ]}"'';
             };
         };
     };

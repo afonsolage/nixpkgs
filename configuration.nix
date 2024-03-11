@@ -85,8 +85,9 @@
         description = "Afonso Lage";
         extraGroups = [ "networkmanager" "wheel" ];
         packages = with pkgs; [
-            #dev
             firefox
+
+            #dev
             nushell
             starship
             git
@@ -96,8 +97,11 @@
             clang
             llvm
             lld
+
+            #neovim
             neovim
             wl-clipboard
+            ripgrep
 
             #etc
             easyeffects
@@ -108,11 +112,11 @@
 
             #Communication
             telegram-desktop
-            slack
             discord
 
             #kedu
             google-chrome
+            slack
 
             #games
             steam
